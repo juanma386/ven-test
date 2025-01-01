@@ -19,19 +19,30 @@ import {
   HStack,
   Icon,
   useBreakpointValue,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { FaUsers, FaBox, FaChartLine, FaWrench } from 'react-icons/fa';
 import Layout from '../components/Layout';
 import Link from 'next/link';
 
 const HomePage = () => {
+  const cardBg = useColorModeValue('white', 'gray.800');
+  const cardBorder = useColorModeValue('gray.200', 'gray.600');
+  const headingColor = useColorModeValue('gray.800', 'white');
+  const textColor = useColorModeValue('gray.600', 'gray.400');
+  const activityTextColor = useColorModeValue('gray.500', 'gray.300');
+
   return (
     <Layout title="Dashboard | Mi Aplicación">
       <VStack spacing={5} align="stretch" mb={8}>
-        <Heading as="h1" size={useBreakpointValue({ base: 'lg', md: 'xl' })}>
+        <Heading
+          as="h1"
+          size={useBreakpointValue({ base: 'lg', md: 'xl' })}
+          color={headingColor}
+        >
           Dashboard
         </Heading>
-        <Text fontSize={useBreakpointValue({ base: 'md', md: 'lg' })}>
+        <Text fontSize={useBreakpointValue({ base: 'md', md: 'lg' })} color={textColor}>
           Bienvenido al panel de control de tu aplicación. Aquí puedes obtener una
           visión general de las estadísticas y la actividad reciente.
         </Text>
@@ -53,8 +64,9 @@ const HomePage = () => {
             borderRadius="lg"
             p={4}
             boxShadow="sm"
-            bg="blue.50"
-            color="blue.600"
+            bg={useColorModeValue('blue.50', 'blue.900')}
+            color={useColorModeValue('blue.600', 'blue.300')}
+            borderColor={cardBorder}
           >
             <StatLabel fontWeight="medium">
               <Icon as={FaUsers} mr={2} />
@@ -73,8 +85,9 @@ const HomePage = () => {
             borderRadius="lg"
             p={4}
             boxShadow="sm"
-            bg="green.50"
-            color="green.600"
+            bg={useColorModeValue('green.50', 'green.900')}
+            color={useColorModeValue('green.600', 'green.300')}
+            borderColor={cardBorder}
           >
             <StatLabel fontWeight="medium">
               <Icon as={FaBox} mr={2} />
@@ -93,8 +106,9 @@ const HomePage = () => {
             borderRadius="lg"
             p={4}
             boxShadow="sm"
-            bg="purple.50"
-            color="purple.600"
+            bg={useColorModeValue('purple.50', 'purple.900')}
+            color={useColorModeValue('purple.600', 'purple.300')}
+            borderColor={cardBorder}
           >
             <StatLabel fontWeight="medium">
               <Icon as={FaChartLine} mr={2} />
@@ -113,8 +127,9 @@ const HomePage = () => {
             borderRadius="lg"
             p={4}
             boxShadow="sm"
-            bg="orange.50"
-            color="orange.600"
+            bg={useColorModeValue('orange.50', 'orange.900')}
+            color={useColorModeValue('orange.600', 'orange.300')}
+            borderColor={cardBorder}
           >
             <StatLabel fontWeight="medium">
               <Icon as={FaWrench} mr={2} />
@@ -131,8 +146,7 @@ const HomePage = () => {
 
       <Divider mb={8} />
 
-      {/* Caja contenedora para la sección de Actividad Reciente */}
-      <Box borderWidth="1px" borderRadius="lg" p={4} boxShadow="sm">
+      <Box borderWidth="1px" borderRadius="lg" p={4} boxShadow="sm" bg={cardBg} borderColor={cardBorder}>
         <Flex
           direction={{ base: 'column', md: 'row' }}
           justify="space-between"
@@ -140,37 +154,36 @@ const HomePage = () => {
           wrap="wrap"
         >
           <Box flex="1" mr={{ md: 8 }} mb={{ base: 4, md: 0 }}>
-            <Heading as="h2" size="lg" mb={4}>
+            <Heading as="h2" size="lg" mb={4} color={headingColor}>
               Actividad Reciente
             </Heading>
             <List spacing={3}>
               <ListItem overflow="hidden">
                 <Flex align="center" justify="space-between">
-                  <Text noOfLines={2}>
+                  <Text noOfLines={2} color={textColor}>
                     <Text as="span" fontWeight="bold">
                       John Doe
                     </Text>{' '}
                     se registró como nuevo usuario.
                   </Text>
-                  <Text fontSize="sm" color="gray.500" noOfLines={1}>
+                  <Text fontSize="sm" color={activityTextColor} noOfLines={1}>
                     Hace 5 minutos
                   </Text>
                 </Flex>
               </ListItem>
               <ListItem overflow="hidden">
                 <Flex align="center" justify="space-between">
-                  <Text noOfLines={2}>
+                  <Text noOfLines={2} color={textColor}>
                     <Text as="span" fontWeight="bold">
                       Producto Laptop Gamer
                     </Text>{' '}
                     fue actualizado.
                   </Text>
-                  <Text fontSize="sm" color="gray.500" noOfLines={1}>
+                  <Text fontSize="sm" color={activityTextColor} noOfLines={1}>
                     Hace 1 hora
                   </Text>
                 </Flex>
               </ListItem>
-              {/* Agrega más elementos de actividad reciente */}
             </List>
           </Box>
         </Flex>
@@ -180,16 +193,16 @@ const HomePage = () => {
 
       <HStack spacing={useBreakpointValue({ base: 2, md: 4 })} justify="center" wrap="wrap">
         <Link href="/users" passHref>
-            <Button colorScheme="blue" size={useBreakpointValue({ base: 'sm', md: 'lg' })} leftIcon={<Icon as={FaUsers} />}>
-                Administrar Usuarios
-            </Button>
+          <Button colorScheme="blue" size={useBreakpointValue({ base: 'sm', md: 'lg' })} leftIcon={<Icon as={FaUsers} />}>
+            Administrar Usuarios
+          </Button>
         </Link>
         <Link href="/products" passHref>
-            <Button colorScheme="blue" size={useBreakpointValue({ base: 'sm', md: 'lg' })} leftIcon={<Icon as={FaBox} />}>
-                Administrar Productos
-            </Button>
+          <Button colorScheme="blue" size={useBreakpointValue({ base: 'sm', md: 'lg' })} leftIcon={<Icon as={FaBox} />}>
+            Administrar Productos
+          </Button>
         </Link>
-    </HStack>
+      </HStack>
     </Layout>
   );
 };
