@@ -1,5 +1,4 @@
-// components/Layout.tsx
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import {
@@ -7,17 +6,11 @@ import {
   Flex,
   HStack,
   VStack,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Avatar,
   Text,
   Button,
   Heading,
   useColorMode,
   Container,
-  useBreakpointValue,
   Collapse,
 } from '@chakra-ui/react';
 import { FaHome } from 'react-icons/fa';
@@ -50,12 +43,48 @@ const Layout: React.FC<LayoutProps> = ({
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const { colorMode } = useColorMode();
 
-  // Define all useBreakpointValue hooks at the top
-  const isMobile = useBreakpointValue({ base: true, md: false });
-  const sidebarMinWidth = useBreakpointValue({ base: '0px', md: '200px', lg: '250px' });
-  const headingSize = useBreakpointValue({ base: 'sm', md: 'md' });
-  const navItemFontSize = useBreakpointValue({ base: 'sm', md: 'md' });
-  const infoIconSize = useBreakpointValue({ base: 3, md: 4 });
+  // Define responsive styles using objects
+  const isMobile = { base: true, md: false };
+  const sidebarMinWidth = { base: '0px', md: '200px', lg: '250px' };
+  const headingSize = { base: 'sm', md: 'md' };
+  const navItemFontSize = { base: 'sm', md: 'md' };
+  const infoIconSize = { base: 3, md: 4 };
+
+  // Function to detect browser
+  const getBrowser = () => {
+    const userAgent = navigator.userAgent;
+    if (userAgent.indexOf("Chrome") > -1) return "Chrome";
+    if (userAgent.indexOf("Safari") > -1) return "Safari";
+    if (userAgent.indexOf("Firefox") > -1) return "Firefox";
+    // Add other browser checks as needed
+    return "Other";
+  };
+
+  // Function to determine margin-left style based on browser and sidebar state
+  const getMarginLeftStyle = (browser: string) => {
+    if (browser === "Safari") {
+      // Safari-specific fix using calc and string values for sidebarMinWidth
+      return {
+        base: 0,
+        md: isSidebarOpen ? sidebarMinWidth.md : 0
+      };
+    } else {
+      // Default behavior for Chrome, Firefox, etc. using numeric values for sidebarMinWidth
+      const numericSidebarMinWidth = { base: 0, md: 200, lg: 250 };
+      return {
+        base: 0,
+        md: isSidebarOpen ? numericSidebarMinWidth.md : 0
+      };
+    }
+  };
+
+  const [browser, setBrowser] = useState("Unknown");
+
+  useEffect(() => {
+    setBrowser(getBrowser());
+  }, []);
+
+  const marginLeftStyle = getMarginLeftStyle(browser);
 
   return (
     <>
@@ -67,7 +96,7 @@ const Layout: React.FC<LayoutProps> = ({
 
       <Flex direction={{ base: 'column', md: 'row' }}>
         {/* Sidebar for larger screens */}
-        {!isMobile && (
+        {!isMobile.base && (
           <Sidebar
             position="fixed"
             left="0"
@@ -81,7 +110,6 @@ const Layout: React.FC<LayoutProps> = ({
             p={{ base: 2, md: 4 }}
           >
             <SidebarToggleButton
-              as={Button}
               variant="ghost"
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               position="absolute"
@@ -126,8 +154,11 @@ const Layout: React.FC<LayoutProps> = ({
         <Box
           as="main"
           flex="1"
-          ml={{ base: 0, md: isSidebarOpen ? sidebarMinWidth : 0 }}
-          transition="margin-left 0.2s ease-in-out"
+          ml={marginLeftStyle}
+          transition={{
+            base: 'none',
+            md: 'margin-left 0.2s ease-in-out',
+          }}
         >
           {/* Header for mobile navigation */}
           <Box
@@ -144,7 +175,8 @@ const Layout: React.FC<LayoutProps> = ({
             <Container maxW="container.lg" px={{ base: 2, md: 4 }}>
               <Flex align="center" justify="space-between">
                 <HStack spacing={4} align="center">
-                  {isMobile && (
+                  {/* Mobile Menu Toggle */}
+                  {isMobile.base && (
                     <Button
                       variant="ghost"
                       onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
@@ -153,7 +185,9 @@ const Layout: React.FC<LayoutProps> = ({
                       <HamburgerIcon />
                     </Button>
                   )}
-                  {!isMobile && (
+
+                  {/* Sidebar Toggle for larger screens */}
+                  {!isMobile.base && (
                     <SidebarToggleButton
                       onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                       mr={2}
@@ -161,13 +195,15 @@ const Layout: React.FC<LayoutProps> = ({
                       <HamburgerIcon />
                     </SidebarToggleButton>
                   )}
+
                   <Heading as="h2" size="md">
                     {title}
                   </Heading>
                 </HStack>
               </Flex>
 
-              {isMobile && (
+              {/* Mobile Navigation */}
+              {isMobile.base && (
                 <Collapse in={isMobileNavOpen} animateOpacity>
                   <VStack align="start" spacing={2} mt={2}>
                     <NavItem as={Link} href="/">
@@ -182,6 +218,7 @@ const Layout: React.FC<LayoutProps> = ({
                         <Text fontSize="sm">Products</Text>
                       </HStack>
                     </NavItem>
+                    {/* ... otros NavItems ... */}
                   </VStack>
                 </Collapse>
               )}
