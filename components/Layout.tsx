@@ -30,7 +30,7 @@ import {
   Nav,
   NavItem,
 } from '@saas-ui/react';
-import { useThemeUI } from 'theme-ui';
+
 
 interface LayoutProps {
   children: ReactNode;
@@ -44,7 +44,7 @@ const Layout: React.FC<LayoutProps> = ({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const { colorMode } = useColorMode();
-  const { theme } = useThemeUI(); // Acceder al tema de theme-ui
+
 
   // Define responsive styles usando objetos
   const isMobile = { base: true, md: false };

@@ -1,11 +1,10 @@
 // styles/theme.js
-import { theme as chakraTheme } from '@chakra-ui/react';
 import { theme as saasTheme } from '@saas-ui/react';
-import { merge } from 'lodash'; // Importar merge desde lodash
+import { merge } from 'lodash';
 
-const theme = merge({}, chakraTheme, saasTheme, {
+const theme = merge({}, saasTheme, {
   colors: {
-    // Añade o modifica los colores según sea necesario
+    // ...
     brand: {
       50: '#f0f8ff',
       100: '#e6f1fe',
@@ -18,14 +17,14 @@ const theme = merge({}, chakraTheme, saasTheme, {
       800: '#0062cc',
       900: '#004ca3',
     },
-    // ... otras personalizaciones
+    // ... 
   },
   fonts: {
     body: '"Open Sans", sans-serif',
     heading: 'Georgia, serif',
     mono: 'Menlo, monospace',
   },
-  // ... otras personalizaciones
+  // ...
 });
 
 export default theme;
