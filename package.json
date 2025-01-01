@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.14.0",
     "@saas-ui/react": "^2.11.3",
     "framer-motion": "^11.15.0",
+    "lodash": "^4.17.21",
     "next": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
