@@ -1,4 +1,3 @@
-// pages/index.tsx
 import React from 'react';
 import {
   Heading,
@@ -18,9 +17,10 @@ import {
   Box,
   VStack,
   HStack,
-  Icon
+  Icon,
+  useBreakpointValue,
 } from '@chakra-ui/react';
-import { FaUsers, FaBox, FaChartLine, FaWrench } from 'react-icons/fa'; // Importa íconos
+import { FaUsers, FaBox, FaChartLine, FaWrench } from 'react-icons/fa';
 import Layout from '../components/Layout';
 import Link from 'next/link';
 
@@ -28,17 +28,22 @@ const HomePage = () => {
   return (
     <Layout title="Dashboard | Mi Aplicación">
       <VStack spacing={5} align="stretch" mb={8}>
-        <Heading as="h1" size="xl">
+        <Heading as="h1" size={useBreakpointValue({ base: 'lg', md: 'xl' })}>
           Dashboard
         </Heading>
-        <Text fontSize="lg">
-          Bienvenido al panel de control de tu aplicación. Aquí puedes obtener una visión general de las
-          estadísticas y la actividad reciente.
+        <Text fontSize={useBreakpointValue({ base: 'md', md: 'lg' })}>
+          Bienvenido al panel de control de tu aplicación. Aquí puedes obtener una
+          visión general de las estadísticas y la actividad reciente.
         </Text>
       </VStack>
 
       <Grid
-        templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }}
+        templateColumns={{
+          base: 'repeat(1, 1fr)',
+          sm: 'repeat(2, 1fr)',
+          md: 'repeat(2, 1fr)',
+          lg: 'repeat(4, 1fr)',
+        }}
         gap={6}
         mb={8}
       >
@@ -83,101 +88,108 @@ const HomePage = () => {
           </Stat>
         </GridItem>
         <GridItem>
-            <Stat
-                borderWidth="1px"
-                borderRadius="lg"
-                p={4}
-                boxShadow="sm"
-                bg="purple.50" 
-                color="purple.600"
-            >
-                <StatLabel fontWeight="medium">
-                    <Icon as={FaChartLine} mr={2} />
-                    Ventas
-                </StatLabel>
-                <StatNumber>$1,234,567</StatNumber>
-                <StatHelpText>
-                    <StatArrow type="increase" />
-                    15.62%
-                </StatHelpText>
-            </Stat>
+          <Stat
+            borderWidth="1px"
+            borderRadius="lg"
+            p={4}
+            boxShadow="sm"
+            bg="purple.50"
+            color="purple.600"
+          >
+            <StatLabel fontWeight="medium">
+              <Icon as={FaChartLine} mr={2} />
+              Ventas
+            </StatLabel>
+            <StatNumber>$1,234,567</StatNumber>
+            <StatHelpText>
+              <StatArrow type="increase" />
+              15.62%
+            </StatHelpText>
+          </Stat>
         </GridItem>
-
         <GridItem>
-            <Stat
-                borderWidth="1px"
-                borderRadius="lg"
-                p={4}
-                boxShadow="sm"
-                bg="orange.50" 
-                color="orange.600" 
-            >
-                <StatLabel fontWeight="medium">
-                    <Icon as={FaWrench} mr={2} />
-                    Tareas
-                </StatLabel>
-                <StatNumber>42</StatNumber>
-                <StatHelpText>
-                    <StatArrow type="increase" />
-                    5.12%
-                </StatHelpText>
-            </Stat>
+          <Stat
+            borderWidth="1px"
+            borderRadius="lg"
+            p={4}
+            boxShadow="sm"
+            bg="orange.50"
+            color="orange.600"
+          >
+            <StatLabel fontWeight="medium">
+              <Icon as={FaWrench} mr={2} />
+              Tareas
+            </StatLabel>
+            <StatNumber>42</StatNumber>
+            <StatHelpText>
+              <StatArrow type="increase" />
+              5.12%
+            </StatHelpText>
+          </Stat>
         </GridItem>
       </Grid>
 
       <Divider mb={8} />
 
-      <Flex direction={{ base: 'column', md: 'row' }} justify="space-between" mb={8}>
-        <Box flex="1" mr={{ md: 8 }}>
-          <Heading as="h2" size="lg" mb={4}>
-            Actividad Reciente
-          </Heading>
-          <List spacing={3}>
-            <ListItem>
-              <Flex align="center" justify="space-between">
-                <Text>
-                  <Text as="span" fontWeight="bold">
-                    John Doe
-                  </Text>{' '}
-                  se registró como nuevo usuario.
-                </Text>
-                <Text fontSize="sm" color="gray.500">
-                  Hace 5 minutos
-                </Text>
-              </Flex>
-            </ListItem>
-            <ListItem>
+      {/* Caja contenedora para la sección de Actividad Reciente */}
+      <Box borderWidth="1px" borderRadius="lg" p={4} boxShadow="sm">
+        <Flex
+          direction={{ base: 'column', md: 'row' }}
+          justify="space-between"
+          mb={8}
+          wrap="wrap"
+        >
+          <Box flex="1" mr={{ md: 8 }} mb={{ base: 4, md: 0 }}>
+            <Heading as="h2" size="lg" mb={4}>
+              Actividad Reciente
+            </Heading>
+            <List spacing={3}>
+              <ListItem overflow="hidden">
                 <Flex align="center" justify="space-between">
-                    <Text>
-                        <Text as="span" fontWeight="bold">
-                        Producto Laptop Gamer
-                        </Text>{' '}
-                        fue actualizado.
-                    </Text>
-                    <Text fontSize="sm" color="gray.500">
-                        Hace 1 hora
-                    </Text>
+                  <Text noOfLines={2}>
+                    <Text as="span" fontWeight="bold">
+                      John Doe
+                    </Text>{' '}
+                    se registró como nuevo usuario.
+                  </Text>
+                  <Text fontSize="sm" color="gray.500" noOfLines={1}>
+                    Hace 5 minutos
+                  </Text>
                 </Flex>
-            </ListItem>
-            {/* Agrega más elementos de actividad reciente */}
-          </List>
-        </Box>
-      </Flex>
+              </ListItem>
+              <ListItem overflow="hidden">
+                <Flex align="center" justify="space-between">
+                  <Text noOfLines={2}>
+                    <Text as="span" fontWeight="bold">
+                      Producto Laptop Gamer
+                    </Text>{' '}
+                    fue actualizado.
+                  </Text>
+                  <Text fontSize="sm" color="gray.500" noOfLines={1}>
+                    Hace 1 hora
+                  </Text>
+                </Flex>
+              </ListItem>
+              {/* Agrega más elementos de actividad reciente */}
+            </List>
+          </Box>
+        </Flex>
+      </Box>
 
       <Divider mb={8} />
 
-      <HStack spacing={4} justify="center">
-        <Link href="/users">
-            <Button colorScheme="blue" size="lg" leftIcon={<Icon as={FaUsers} />}>
+      <HStack spacing={useBreakpointValue({ base: 2, md: 4 })} justify="center" wrap="wrap">
+        <Link href="/users" passHref>
+            <Button colorScheme="blue" size={useBreakpointValue({ base: 'sm', md: 'lg' })} leftIcon={<Icon as={FaUsers} />}>
                 Administrar Usuarios
             </Button>
         </Link>
-        <Link href="/products">
-            <Button colorScheme="blue" size="lg" leftIcon={<Icon as={FaBox} />}>
+        <Link href="/products" passHref>
+            <Button colorScheme="blue" size={useBreakpointValue({ base: 'sm', md: 'lg' })} leftIcon={<Icon as={FaBox} />}>
                 Administrar Productos
             </Button>
         </Link>
-      </HStack>
+    </HStack>
     </Layout>
   );
 };
