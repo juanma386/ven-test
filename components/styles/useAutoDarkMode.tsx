@@ -1,14 +1,15 @@
 import { useColorMode } from '@chakra-ui/react';
-import moment from 'moment';
-import { useEffect } from 'react'; // Importa useEffect
+import moment from 'moment-timezone'; // Importa moment-timezone
+import { useEffect } from 'react';
 
 function useAutoDarkMode() {
   const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
     const changeTheme = () => {
-      const currentHour = moment().hour();
-      const isDarkHour = currentHour >= 18 || currentHour < 6;
+      const clientTimeZone = moment.tz.guess(); // Obtiene la zona horaria del cliente
+      const currentHour = moment().tz(clientTimeZone).hour(); // Obtiene la hora en la zona horaria del cliente
+      const isDarkHour = currentHour >= 18 || currentHour < 6; // Hora de la noche (6 PM - 6 AM)
 
       const storedTheme = localStorage.getItem('theme');
 
@@ -28,10 +29,11 @@ function useAutoDarkMode() {
     };
 
     changeTheme();
-    const interval = setInterval(changeTheme, 60000);
+    const interval = setInterval(changeTheme, 60000); // Verifica cada minuto
 
     return () => clearInterval(interval);
   }, [colorMode, toggleColorMode]);
+
 }
 
 export default useAutoDarkMode;
