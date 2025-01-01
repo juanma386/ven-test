@@ -1,3 +1,4 @@
+// components/Layout.tsx
 import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
