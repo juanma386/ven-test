@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev -p 33000",
     "build": "next build",
-    "start": "next start -p 33000",
+    "start": "next start",
     "type-check": "tsc"
   },
   "dependencies": {
