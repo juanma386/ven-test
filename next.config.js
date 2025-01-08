@@ -7,7 +7,7 @@ const nextConfig = {
       config.plugins.push(
         new webpack.EnvironmentPlugin({
             // expone las variables como process.env.NOMBRE_VARIABLE
-            ENDPOINT_URL: process.env.ENDPOINT_URL,
+            ENDPOINT_URL: process.env.ENDPOINT_URL || 'http://localhost:3000',
         })
       );
       return config;
