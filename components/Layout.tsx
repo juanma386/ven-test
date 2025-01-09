@@ -61,50 +61,7 @@ const Layout: React.FC<LayoutProps> = ({
 
       <Flex direction={{ base: 'column', md: 'row' }}>
         {/* Sidebar for larger screens */}
-        <Sidebar
-          position="fixed"
-          left="0"
-          top="0"
-          bottom="0"
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-          bg={colorMode === 'light' ? 'gray.100' : 'gray.800'}
-          boxShadow="lg"
-          p={{ base: 2, md: 4 }}
-          sx={{
-            minWidth: ['0px', '200px', 'var(--chakra-sizes-sidebar)'],
-          }}
-        >
-          <SidebarToggleButton
-            variant="ghost"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            position="absolute"
-            top="2"
-            right="-10"
-            zIndex="banner"
-          >
-            <HamburgerIcon />
-          </SidebarToggleButton>
-          <VStack align="start" spacing={4}>
-            <Heading as="h2" size={headingSize} sx={{ color: 'text' }}>
-              Mi Aplicación
-            </Heading>
-            <SidebarSection mt={4}>
-              <Nav orientation="vertical">
-                <NavItem as={Link} href="/">
-                  <HStack>
-                    <FaHome />
-                    <Text fontSize={navItemFontSize} sx={{ color: 'text' }}>
-                      Home
-                    </Text>
-                  </HStack>
-                </NavItem>
-                <ThemeSwitcher /> {/* Agrega el componente ThemeSwitcher aquí */}
-              </Nav>
-            </SidebarSection>
-          </VStack>
-        </Sidebar>
-
+     
         <Box
           as="main"
           flex="1"
